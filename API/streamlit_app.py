@@ -106,7 +106,7 @@ st.set_page_config(
      }
  )
 
-def selectCrypto(cryptos):
+def selectCrypto():
     option = st.selectbox(
          'Gráfica:',
         (mainDf.get(["Badge"])), help="Select one of these")
@@ -151,7 +151,7 @@ wCryptos = [wBitcoin, wEthereum, wTether, wXrp, wSolana, wCardano, wDogecoin, wL
 
 dataFrame(wCryptos)
 
-selectCrypto(wCryptos)
+selectCrypto()
 
 
 components.html("""""")
