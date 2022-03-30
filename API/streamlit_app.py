@@ -144,7 +144,10 @@ wCardano = writeCurrency(cardano)
 dogecoin = getCrypto('dogecoin')
 wDogecoin = writeCurrency(dogecoin)
 
-wCryptos = [wBitcoin, wEthereum, wTether, wXrp, wSolana, wCardano, wDogecoin]
+litecoin = getCrypto('litecoin')
+wLitecoin = writeCurrency(litecoin)
+
+wCryptos = [wBitcoin, wEthereum, wTether, wXrp, wSolana, wCardano, wDogecoin, wLitecoin]
 
 dataFrame(wCryptos)
 
