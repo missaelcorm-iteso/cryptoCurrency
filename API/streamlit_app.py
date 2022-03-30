@@ -108,8 +108,8 @@ st.set_page_config(
 
 def selectCrypto(cryptos):
     option = st.selectbox(
-         'How would you like to be contacted?',
-        (mainDf.get(["Badge"])))
+         'Gráfica:',
+        (mainDf.get(["Badge"])), help="Select one of these")
 
     with st.expander(option, True):
         components.html(f"""
