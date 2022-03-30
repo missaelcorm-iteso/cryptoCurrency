@@ -1,4 +1,3 @@
-from asyncio.windows_events import NULL
 from operator import index
 from urllib import response
 from webbrowser import get
