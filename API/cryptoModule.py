@@ -87,7 +87,7 @@ cryptosJSON = {
 
 def dataFrame(wCrypto):
     global mainDf
-    mainDf = pd.DataFrame(columns=json.loads(sortCryptoData(wEthereum)))
+    mainDf = pd.DataFrame(columns=json.loads(sortCryptoData(wCrypto)))
 
     for i in range(len(wCrypto)):
         mainDf.loc[i] = json.loads(sortCryptoData(wCrypto[i]))
