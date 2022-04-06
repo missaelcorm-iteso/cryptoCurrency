@@ -8,6 +8,7 @@ import streamlit.components.v1 as components
 import pandas as pd
 import math
 import numpy as np
+from streamlit_app import wEthereum
 
 def fValue(number):
     return ("{:,}".format(number))
@@ -75,7 +76,7 @@ def sortCryptoData(cryptoData):
 
 def dataFrame(wCrypto):
     global mainDf
-    mainDf = pd.DataFrame(columns=json.loads(sortCryptoData(wCrypto)))
+    mainDf = pd.DataFrame(columns=json.loads(sortCryptoData(wEthereum)))
 
     for i in range(len(wCrypto)):
         mainDf.loc[i] = json.loads(sortCryptoData(wCrypto[i]))
