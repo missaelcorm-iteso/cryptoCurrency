@@ -73,18 +73,6 @@ def sortCryptoData(cryptoData):
     })
     return newRow
 
-startHeaders()
-cryptosJSON = {
-        'Name',
-        'Price',
-        '24h %',
-        '7d %',
-        'Market Cap',
-        'Volume(24h)',
-        'Circulating Supply',
-        #'Last 7 Days'
-    }
-
 def dataFrame(wCrypto):
     global mainDf
     mainDf = pd.DataFrame(columns=json.loads(sortCryptoData(wCrypto)))
@@ -92,18 +80,6 @@ def dataFrame(wCrypto):
     for i in range(len(wCrypto)):
         mainDf.loc[i] = json.loads(sortCryptoData(wCrypto[i]))
     st.dataframe(mainDf)
-
-st.set_page_config(
-     page_title="Crypto Currency APP",
-     page_icon="💲",
-     layout="centered",
-     initial_sidebar_state="expanded",
-     menu_items={
-         'Get Help': 'https://www.extremelycoolapp.com/help',
-         'Report a bug': "https://www.extremelycoolapp.com/bug",
-         'About': "# This is a header. This is an *extremely* cool app!"
-     }
- )
 
 def selectCrypto():
     option = st.selectbox(
