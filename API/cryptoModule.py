@@ -28,9 +28,10 @@ def writeCurrencyTest(response):
 # --- Starts the session ---
 def startHeaders():
     # Create the headers using our API key
+    YOUR_API_KEY = os.getenv("api_key")
     headers = {
     'Accepts': 'application/json',
-    'X-CMC_PRO_API_KEY': f'{os.getenv("api_key")}'
+    'X-CMC_PRO_API_KEY': f'{YOUR_API_KEY}'
     }
     # Start the session to the API
     global session
