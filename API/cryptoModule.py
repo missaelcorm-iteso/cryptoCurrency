@@ -206,9 +206,6 @@ def downloadCSV():
 
 # --- Main Function ---
 def Main():
-
-    configure()
-
     # Loads the components
     appComponents()
     startHeaders()
