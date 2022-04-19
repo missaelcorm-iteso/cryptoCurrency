@@ -6,11 +6,6 @@ import pandas as pd
 import math
 import numpy as np
 import os
-from dotenv import load_dotenv
-
-
-def configure():
-    load_dotenv()
 
 # --- Separates the number by commas (,), example: 1,234,456 ---
 def fValue(number):
@@ -28,7 +23,7 @@ def writeCurrencyTest(response):
 # --- Starts the session ---
 def startHeaders():
     # Create the headers using our API key
-    YOUR_API_KEY = os.getenv("api_key")
+    YOUR_API_KEY = st.secrets["api_key"]
     headers = {
     'Accepts': 'application/json',
     'X-CMC_PRO_API_KEY': f'{YOUR_API_KEY}'
