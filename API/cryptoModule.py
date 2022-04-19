@@ -6,6 +6,11 @@ import pandas as pd
 import math
 import numpy as np
 import os
+from dotenv import load_dotenv
+
+
+def configure():
+    load_dotenv()
 
 # --- Separates the number by commas (,), example: 1,234,456 ---
 def fValue(number):
@@ -25,7 +30,7 @@ def startHeaders():
     # Create the headers using our API key
     headers = {
     'Accepts': 'application/json',
-    'X-CMC_PRO_API_KEY': '4c2644ea-d9ac-4143-8dae-71df1b333b62'
+    'X-CMC_PRO_API_KEY': f'{os.getenv("api_key")}'
     }
     # Start the session to the API
     global session
@@ -205,6 +210,9 @@ def downloadCSV():
 
 # --- Main Function ---
 def Main():
+
+    configure()
+
     # Loads the components
     appComponents()
     startHeaders()
