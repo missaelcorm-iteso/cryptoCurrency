@@ -7,42 +7,51 @@ import math
 import numpy as np
 import os
 
+# --- Separates the number by commas (,), example: 1,234,456 ---
 def fValue(number):
     return ("{:,}".format(number))
 
+# --- Rounds Up the number, example 1234.56789 -> 1234.57 ---
 def round_up(n, decimals=0):
     multiplier = 10 ** decimals
     return math.ceil(n * multiplier) / multiplier
 
+# --- A test reponse in JSON format ---
 def writeCurrencyTest(response):
     st.write(json.loads(response.text)['data'])
 
-# --- Start the session ---
+# --- Starts the session ---
 def startHeaders():
+    # Create the headers using our API key
     headers = {
     'Accepts': 'application/json',
     'X-CMC_PRO_API_KEY': '4c2644ea-d9ac-4143-8dae-71df1b333b62'
     }
+    # Start the session to the API
     global session
     session = Session()
     session.headers.update(headers)
 
-# --- Get Crypto and return JSON info ---
+# --- Gets Crypto and return JSON info ---
 def getCrypto(crypto):
+    # Define the params
     params = {
         'slug': str(crypto),
         'convert': 'usd'
     }
     url = 'https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest'
+    # Get the response of the API, with the Crypto information 
     response = session.get(url, params=params)
     return response
 
 # --- Writes the info of the Crypto ---
 def writeCurrency(response):
+    # Load the respone
     responseID = json.dumps(json.loads(response.text)['data'])
     for key in json.loads(responseID):
         responseID = key
     
+    # Assign the values to the variable that it corresponds
     name = json.loads(response.text)['data'][responseID]['name']
     symbol = json.loads(response.text)['data'][responseID]['symbol']
     price = json.loads(response.text)['data'][responseID]['quote']['USD']['price']
@@ -53,11 +62,14 @@ def writeCurrency(response):
     _cSupply = json.loads(response.text)['data'][responseID]['total_supply']
     #_last7Days = json.loads(response.text)['data'][responseID]
 
+    #A list with all data
     cryptoData = [name, symbol, price, _24h, _7d, _Market, _Volume, _cSupply]
 
     return cryptoData
 
+# --- Specifies the rows on the data frame ---
 def sortCryptoData(cryptoData):
+    # Made a dictionary with the values to make a Data Frame
     newRow = json.dumps({
         'Name': f"{cryptoData[0]} ({cryptoData[1]})",
         'Price': fValue(round_up(cryptoData[2], 2)),
@@ -71,37 +83,47 @@ def sortCryptoData(cryptoData):
     })
     return newRow
 
+# --- Adds the information from the JSON request to ---
+# --- a Data Frame created by Pandas Library       ---
 def dataFrame(wCrypto):
+    # Define the columns of the Data Frame
     global mainDf
     mainDf = pd.DataFrame(columns = json.loads(sortCryptoData(wEthereum)))
 
+    # Pull all the data into the Data Frame
     for i in range(len(wCrypto)):
         mainDf.loc[i] = json.loads(sortCryptoData(wCrypto[i]))
     return mainDf
 
+# --- Displays the Data Frame using Streamlit Library ---
 def streamlitFrame(dataFrame):
     st.dataframe(dataFrame)
 
+# --- Displays a select box to choose one and display the content ---
 def selectCrypto():
+    # Create the select box
     option = st.selectbox(
          'Gráfica:',
         (mainDf.get(["Badge"])), help="Select one of these")
 
+    # Show a widget depending of the value selected in the previous select box
     with st.expander(option, True):
         components.html(f"""
         <script defer src="https://www.livecoinwatch.com/static/lcw-widget.js"></script> <div class="livecoinwatch-widget-1" lcw-coin="{(mainDf.loc[np.where(mainDf["Badge"]==option),"Badge"].values[0])}" lcw-base="USD" lcw-secondary="BTC" lcw-period="d" lcw-color-tx="#ffffff" lcw-color-pr="#58c7c5" lcw-color-bg="#1f2434" lcw-border-w="1" ></div>
         """, height=212)
 
+# --- Sest the basics components of the App ---
 def appComponents():
     st.set_page_config(
         page_title="Crypto Currency APP",
         page_icon="💲",
-        layout="centered",
+        layout="wide",
         initial_sidebar_state="expanded",
         menu_items={
-            'Get Help': 'https://www.extremelycoolapp.com/help',
-            'Report a bug': "https://www.extremelycoolapp.com/bug",
-            'About': "# This is a header. This is an *extremely* cool app!"
+            'About': "# CryptoCurrency\n"+
+            "**CryptoCurrency** is a project WebApp to a University Activity.\n\n"+
+            '-Missael Cortés Mendoza\n'+
+            '***'
         }
     )
 
@@ -109,6 +131,7 @@ def appComponents():
 
     components.html('''<script defer src="https://www.livecoinwatch.com/static/lcw-widget.js"></script> <div class="livecoinwatch-widget-5" lcw-base="USD" lcw-color-tx="#999999" lcw-marquee-1="coins" lcw-marquee-2="movers" lcw-marquee-items="30" ></div>''', height=75)
 
+# --- Defines the Cryptos that we'll gonna work ---
 def cryptos():
     wCryptos = []
 
@@ -151,39 +174,54 @@ def cryptos():
 
     return wCryptos
 
+# --- A funtion to exports a Data Frame on a CSV file ---
 def exportCSV(dataFrame):
-    os.makedirs('CSV', exist_ok=True)  
+    # Makes a directory called "CSV", if it is not created, then it creates one
+    os.makedirs('CSV', exist_ok=True)
+    # Makes and export the CSV file
     CSV = dataFrame.to_csv("CSV/out.csv", index=False, header=True)
     return CSV
 
+# --- Downloads the CSV file that we previously made ---
 def downloadCSV():
+    # Read the CSV
     df = pd.read_csv('CSV/out.csv')
     
     @st.cache
     def convert_df(df):
         return df.to_csv().encode('utf-8')
     
+    #Convert the readed CSV on a CSV file
     csv = convert_df(df)
 
+    # Button to download the CSV file
     st.download_button(
-        "Press to Download (.csv)",
+        "Download data as CSV",
         csv,
         "out.csv",
         "text/csv",
         key='download-csv'
     )
 
+# --- Main Function ---
 def Main():
+    # Loads the components
     appComponents()
-
     startHeaders()
+
+    # Defines the cryptos and get all data from them
     wCryptos = cryptos()
 
+    # Puts the data into a Data Frame
     dFrame = dataFrame(wCryptos)
+    # Display the Data Frame
     streamlitFrame(dFrame)
 
+    # Creates a CSV file
     CSV = exportCSV(dFrame)
+    # Creates a button to download the CSV file
     downloadCSV()
 
+    # Shows the select box and the expander
     selectCrypto()
 
