@@ -1,6 +1,3 @@
-from operator import index
-from webbrowser import get
-from pip import main
 from requests import Request, Session
 import json
 import streamlit as st
@@ -8,7 +5,7 @@ import streamlit.components.v1 as components
 import pandas as pd
 import math
 import numpy as np
-from streamlit_app import wEthereum
+import os
 
 def fValue(number):
     return ("{:,}".format(number))
@@ -76,11 +73,14 @@ def sortCryptoData(cryptoData):
 
 def dataFrame(wCrypto):
     global mainDf
-    mainDf = pd.DataFrame(columns=json.loads(sortCryptoData(wEthereum)))
+    mainDf = pd.DataFrame(columns = json.loads(sortCryptoData(wEthereum)))
 
     for i in range(len(wCrypto)):
         mainDf.loc[i] = json.loads(sortCryptoData(wCrypto[i]))
-    st.dataframe(mainDf)
+    return mainDf
+
+def streamlitFrame(dataFrame):
+    st.dataframe(dataFrame)
 
 def selectCrypto():
     option = st.selectbox(
@@ -91,3 +91,99 @@ def selectCrypto():
         components.html(f"""
         <script defer src="https://www.livecoinwatch.com/static/lcw-widget.js"></script> <div class="livecoinwatch-widget-1" lcw-coin="{(mainDf.loc[np.where(mainDf["Badge"]==option),"Badge"].values[0])}" lcw-base="USD" lcw-secondary="BTC" lcw-period="d" lcw-color-tx="#ffffff" lcw-color-pr="#58c7c5" lcw-color-bg="#1f2434" lcw-border-w="1" ></div>
         """, height=212)
+
+def appComponents():
+    st.set_page_config(
+        page_title="Crypto Currency APP",
+        page_icon="💲",
+        layout="centered",
+        initial_sidebar_state="expanded",
+        menu_items={
+            'Get Help': 'https://www.extremelycoolapp.com/help',
+            'Report a bug': "https://www.extremelycoolapp.com/bug",
+            'About': "# This is a header. This is an *extremely* cool app!"
+        }
+    )
+
+    st.title('💲CryptoCurrency💲')
+
+    components.html('''<script defer src="https://www.livecoinwatch.com/static/lcw-widget.js"></script> <div class="livecoinwatch-widget-5" lcw-base="USD" lcw-color-tx="#999999" lcw-marquee-1="coins" lcw-marquee-2="movers" lcw-marquee-items="30" ></div>''', height=75)
+
+def cryptos():
+    wCryptos = []
+
+    bitcoin = getCrypto('bitcoin')
+    wBitcoin = writeCurrency(bitcoin)
+    wCryptos.append(wBitcoin)
+
+    ethereum = getCrypto('ethereum')
+    global wEthereum
+    wEthereum = writeCurrency(ethereum)
+    wCryptos.append(wEthereum)
+
+    tether = getCrypto('tether')
+    wTether = writeCurrency(tether)
+    wCryptos.append(wTether)
+
+    bnb = getCrypto('bnb')
+    wBnb = writeCurrency(bnb)
+    wCryptos.append(wBnb)
+
+    xrp = getCrypto('xrp')
+    wXrp = writeCurrency(xrp)
+    wCryptos.append(wXrp)
+
+    solana = getCrypto('solana')
+    wSolana = writeCurrency(solana)
+    wCryptos.append(wSolana)
+
+    cardano = getCrypto('cardano')
+    wCardano = writeCurrency(cardano)
+    wCryptos.append(wCardano)
+
+    dogecoin = getCrypto('dogecoin')
+    wDogecoin = writeCurrency(dogecoin)
+    wCryptos.append(wDogecoin)
+
+    litecoin = getCrypto('litecoin')
+    wLitecoin = writeCurrency(litecoin)
+    wCryptos.append(wLitecoin)
+
+    return wCryptos
+
+def exportCSV(dataFrame):
+    os.makedirs('CSV', exist_ok=True)  
+    CSV = dataFrame.to_csv("CSV/out.csv", index=False, header=True)
+    return CSV
+
+def downloadCSV():
+    df = pd.read_csv('CSV/out.csv')
+    
+    @st.cache
+    def convert_df(df):
+        return df.to_csv().encode('utf-8')
+    
+    csv = convert_df(df)
+
+    st.download_button(
+        "Press to Download (.csv)",
+        csv,
+        "out.csv",
+        "text/csv",
+        key='download-csv'
+    )
+
+def Main():
+    appComponents()
+
+    startHeaders()
+    wCryptos = cryptos()
+
+    dFrame = dataFrame(wCryptos)
+    streamlitFrame(dFrame)
+
+    CSV = exportCSV(dFrame)
+    downloadCSV()
+
+    selectCrypto()
+
