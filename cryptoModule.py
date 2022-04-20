@@ -1,3 +1,5 @@
+from typing import Any
+from webbrowser import get
 from requests import Request, Session
 import json
 import streamlit as st
@@ -98,7 +100,7 @@ def dataFrame(wCrypto):
 
 # --- Displays the Data Frame using Streamlit Library ---
 def streamlitFrame(dataFrame):
-    st.dataframe(dataFrame)
+    st.dataframe(dataFrame, height=800)
 
 # --- Displays a select box to choose one and display the content ---
 def selectCrypto():
@@ -175,6 +177,54 @@ def cryptos():
     wLitecoin = writeCurrency(litecoin)
     wCryptos.append(wLitecoin)
 
+    terra = getCrypto('terra')
+    wTerra = writeCurrency(terra)
+    wCryptos.append(wTerra)
+
+    avalanche = getCrypto('avalanche')
+    wAvalanche = writeCurrency(avalanche)
+    wCryptos.append(wAvalanche)
+
+    shiba_inu = getCrypto('shiba-inu')
+    wShiba_inu = writeCurrency(shiba_inu)
+    wCryptos.append(wShiba_inu)
+
+    polygon = getCrypto('polygon')
+    wPolygon = writeCurrency(polygon)
+    wCryptos.append(wPolygon)
+
+    cronos = getCrypto('cronos')
+    wCronos = writeCurrency(cronos)
+    wCryptos.append(wCronos)
+
+    cosmos = getCrypto('cosmos')
+    wCosmos = writeCurrency(cosmos)
+    wCryptos.append(wCosmos)
+
+    tron = getCrypto('tron')
+    wTron = writeCurrency(tron)
+    wCryptos.append(wTron)
+
+    ftx_token = getCrypto('ftx-token')
+    wFtx_token = writeCurrency(ftx_token)
+    wCryptos.append(wFtx_token)
+
+    monero = getCrypto('monero')
+    wMonero = writeCurrency(monero)
+    wCryptos.append(wMonero)
+
+    decentraland = getCrypto('decentraland')
+    wDecentraland = writeCurrency(decentraland)
+    wCryptos.append(wDecentraland)
+
+    maker = getCrypto('maker')
+    wMaker = writeCurrency(maker)
+    wCryptos.append(wMaker)
+
+    neo = getCrypto('neo')
+    wNeo = writeCurrency(neo)
+    wCryptos.append(wNeo)
+
     return wCryptos
 
 # --- A funtion to exports a Data Frame on a CSV file ---
@@ -208,6 +258,7 @@ def downloadCSV():
 
 # --- Main Function ---
 def Main():
+
     # Loads the components
     appComponents()
     startHeaders()
