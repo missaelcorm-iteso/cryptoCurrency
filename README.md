@@ -1,4 +1,4 @@
 # cryptoCurrency
 Web App to display Cryptocurency
 
-![caption](https://github.com/missaelcorm/cryptoCurrency/blob/main/WebAppWorking.gif)
+![caption](https://github.com/missaelcorm/cryptoCurrency/blob/main/Media/WebAppWorking.gif)
