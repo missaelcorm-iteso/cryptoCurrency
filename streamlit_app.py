@@ -1,3 +1,3 @@
-from cryptoModule import Main
+from Modules.main import *
 
 Main()
