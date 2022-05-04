@@ -30,14 +30,14 @@ def streamlitFrame(dataFrame):
     st.dataframe(dataFrame, height=800)
 
 # --- Displays a select box to choose one and display the content ---
-def selectCrypto(dFrame):
+def selectCrypto(dataFrame):
     # Create the select box
     option = st.selectbox(
          'Gráfica:',
-        (dFrame.get(["Badge"])), help="Select one of these")
+        (dataFrame.get(["Badge"])), help="Select one of these")
 
     # Show a widget depending of the value selected in the previous select box
     with st.expander(option, True):
         components.html(f"""
-        <script defer src="https://www.livecoinwatch.com/static/lcw-widget.js"></script> <div class="livecoinwatch-widget-1" lcw-coin="{(dFrame.loc[np.where(dFrame["Badge"]==option),"Badge"].values[0])}" lcw-base="USD" lcw-secondary="BTC" lcw-period="d" lcw-color-tx="#ffffff" lcw-color-pr="#58c7c5" lcw-color-bg="#1f2434" lcw-border-w="1" ></div>
+        <script defer src="https://www.livecoinwatch.com/static/lcw-widget.js"></script> <div class="livecoinwatch-widget-1" lcw-coin="{(dataFrame.loc[np.where(dataFrame["Badge"]==option),"Badge"].values[0])}" lcw-base="USD" lcw-secondary="BTC" lcw-period="d" lcw-color-tx="#ffffff" lcw-color-pr="#58c7c5" lcw-color-bg="#1f2434" lcw-border-w="1" ></div>
         """, height=212)

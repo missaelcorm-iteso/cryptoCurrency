@@ -10,7 +10,6 @@ from Modules.formatNumbers import *
 def writeCurrencyTest(response):
     st.write(json.loads(response.text)['data'])
 
-
 # --- Writes the info of the Crypto ---
 def writeCurrency(response):
     # Load the respone
@@ -54,7 +53,6 @@ def sortCryptoData(cryptoData):
 # --- a Data Frame created by Pandas Library       ---
 def dataFrame(wCrypto):
     # Define the columns of the Data Frame
-    global mainDf
     mainDf = pd.DataFrame(columns = ['Name', 'Price', '24h %', '7d %', 'Market Cap', 'Volume(24h)', 'Circulating Supply', 'Badge'])
 
     # Pull all the data into the Data Frame
