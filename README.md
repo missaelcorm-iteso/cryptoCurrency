@@ -37,7 +37,7 @@ pip install -r requirements.txt
 To get your API key, you need to get into [CoinMarketCap - Developers](https://coinmarketcap.com/api/)
 and click on "GET YOUR API KEY NOW" button.
 
-![[Pasted image 20220505125724.png]]
+![](Media/Pasted image 20220505125724.png)
 
 Then a form will be displayed, and you need to sign up with your
 own data.
