@@ -24,7 +24,7 @@ GitPython==3.1.27
 idna==3.3
 importlib-metadata==4.11.3
 ipykernel==6.13.0
-ipython==8.3.0
+ipython
 ipython-genutils==0.2.0
 ipywidgets==7.7.0
 jedi==0.18.1
