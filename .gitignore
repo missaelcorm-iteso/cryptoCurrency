@@ -1,7 +1,7 @@
 
 *.toml
-API/CSV/out.csv
 *.csv
+__pycache__/
 
 
 # Created by https://www.toptal.com/developers/gitignore/api/venv
