@@ -43,12 +43,12 @@ and get the responses with all data that we wanna get.
 To get your API key, you need to get into [CoinMarketCap - Developers](https://coinmarketcap.com/api/)
 and click on "GET YOUR API KEY NOW" button.
 
-![[Pasted image 20220505125724.png]]
+![GET YOUR API KEY NOW](/Media/Pasted%20image%2020220505125724.png)
 
 Then a form will be displayed, and you need to sign up with your
 own data.
 
-![[Pasted image 20220505125838.png]]
+![Sign Up](/Media/Pasted%20image%2020220505125838.png)
 
 Note: Be sure about to select **Basic - Free basic access for personal use** as **Plan**
 
@@ -56,7 +56,7 @@ Then you need to log in. Once you are logged in, that should show you the **Dash
 
 And should show you the **API Key**'s section.
 
-![[Pasted image 20220505130437.png]]
+![API Key](/Media/Pasted%20image%2020220505130437.png)
 
 Click on **COPY KEY** and save your API Key
 
