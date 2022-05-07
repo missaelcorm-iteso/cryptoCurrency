@@ -34,6 +34,12 @@ pip install -r requirements.txt
 ```
 
 ## Setting up your API key
+
+For the right functioning of the Web App, we need to get an API
+key to do the requests to the API. In this case we're gonna to 
+use the API of [CoinMarketCap](https://coimarketcap.com), to do the requests
+and get the responses with all data that we wanna get.
+
 To get your API key, you need to get into [CoinMarketCap - Developers](https://coinmarketcap.com/api/)
 and click on "GET YOUR API KEY NOW" button.
 
